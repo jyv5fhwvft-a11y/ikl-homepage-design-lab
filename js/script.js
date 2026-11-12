@@ -247,14 +247,15 @@ nav.querySelectorAll("a").forEach(link => {
 document.getElementById("currentYear").textContent =
   new Date().getFullYear();
 
-// ======================================================
-// 9. PAGE REFRESH RETURN TO TOP
-// ======================================================
+
+/* =========================================================
+   9. PAGE REFRESH RETURN TO TOP
+   ========================================================= */
 
 // Temporary browser-session marker for detecting a page reload.
 const refreshMarker = "iklHomepageRefresh";
 
-// Record that this page is being unloaded.
+// Record that the page is being unloaded.
 window.addEventListener("pagehide", () => {
   try {
     sessionStorage.setItem(refreshMarker, "true");
@@ -263,82 +264,66 @@ window.addEventListener("pagehide", () => {
   }
 });
 
-// Check whether the previous page visit ended with an unload.
+// Check whether the previous visit ended with an unload.
 let wasPageRefreshed = false;
 
 try {
   wasPageRefreshed =
     sessionStorage.getItem(refreshMarker) === "true";
 
-  // Clear the marker so it cannot affect later navigation.
   sessionStorage.removeItem(refreshMarker);
 
 } catch (error) {
   // Continue normally if browser storage is unavailable.
 }
 
-
-  // TEMPORARY DIAGNOSTIC — identify Safari refresh behaviour.
-  const diagnosticNavigationEntry =
-    performance.getEntriesByType("navigation")[0];
-
-  if (window.location.hash || wasPageRefreshed) {
-    window.alert(
-      "IKL Refresh Diagnostic\n\n" +
-      "Navigation type: " +
-      (diagnosticNavigationEntry?.type || "unavailable") +
-      "\nRefresh marker detected: " +
-      wasPageRefreshed +
-      "\nURL fragment: " +
-      (window.location.hash || "none")
-    );
-  }
-
-
-// Only perform the following actions after a detected reload.
+// Apply the correction only when the marker is detected.
 if (wasPageRefreshed) {
 
-  // Prevent the browser from restoring the previous scroll position.
+  // Prevent automatic browser scroll restoration.
   if ("scrollRestoration" in window.history) {
     window.history.scrollRestoration = "manual";
   }
 
-  // Remove fragments such as #about and #pathways from the URL.
+  // Remove URL fragments such as #about and #pathways.
   window.history.replaceState(
     null,
     "",
     window.location.pathname + window.location.search
   );
 
-  // Return the visitor to the top of the homepage.
+  // Temporarily disable smooth scrolling.
+  const pageRoot = document.documentElement;
+  const originalScrollBehavior = pageRoot.style.scrollBehavior;
+
+  pageRoot.style.scrollBehavior = "auto";
+
+  // Return the visitor to the homepage top.
   const returnToTop = () => {
     window.scrollTo(0, 0);
   };
 
-  // Apply the position after the page becomes visible.
+  // Apply the correction at several stages.
   window.addEventListener("pageshow", () => {
     returnToTop();
 
-    window.requestAnimationFrame(() => {
-      returnToTop();
+    window.requestAnimationFrame(returnToTop);
 
-      window.requestAnimationFrame(returnToTop);
-    });
+    window.setTimeout(returnToTop, 250);
+    window.setTimeout(returnToTop, 750);
+    window.setTimeout(returnToTop, 1200);
 
-    window.setTimeout(returnToTop, 150);
-
-  }, { once: true });
-
-  // Also apply the position after the page finishes loading.
-  window.addEventListener("load", () => {
-    returnToTop();
-    window.setTimeout(returnToTop, 150);
+    // Restore the original scrolling style afterwards.
+    window.setTimeout(() => {
+      pageRoot.style.scrollBehavior = originalScrollBehavior;
+    }, 1500);
 
   }, { once: true });
+
+  // Also handle the page load event.
+  window.addEventListener("load", returnToTop, { once: true });
 }
 
-// ======================================================
+// =========================================================
 // END OF SECTION 9
-// ======================================================
-
-
+// =========================================================
