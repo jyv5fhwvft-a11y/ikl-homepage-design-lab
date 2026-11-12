@@ -89,7 +89,7 @@ function renderResults(query) {
 
   if (!matches.length) {
     results.innerHTML =
-      '<p class="no-results">No matching concept found yet. Try another word or subject.</p>';
+      '<p class="no-results no-match">No matching concept found yet. Try another word or subject.</p>';
     return;
   }
 
@@ -132,6 +132,7 @@ function renderResults(query) {
 form.addEventListener("submit", event => {
   event.preventDefault();
   renderResults(input.value);
+  input.value = "";
 });
 
 document.querySelectorAll("[data-search]").forEach(button => {
