@@ -229,17 +229,21 @@ h3 {
 /* Main homepage heading.
    The maximum size is reduced from 61px to 54px. */
 
+
 .hero h1 {
     margin: 0;
     color: var(--navy);
-    font-size: clamp(36px, 4.4vw, 54px);
+    font-size: 46px;
     line-height: 1.12;
     letter-spacing: -2.5px;
 }
 
 .hero h1 span {
     color: var(--blue);
+    font-size: 38px;
+    font-weight: 700;
 }
+
 
 .hero-description {
     max-width: 550px;
