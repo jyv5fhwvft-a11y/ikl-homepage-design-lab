@@ -247,26 +247,45 @@ nav.querySelectorAll("a").forEach(link => {
 document.getElementById("currentYear").textContent =
   new Date().getFullYear();
 
+// ======================================================
+// 9. PAGE REFRESH RETURN TO TOP
+// ======================================================
 
-/* =========================================================
-   9. PAGE REFRESH — RETURN TO TOP
-   ========================================================= */
+// Temporary browser-session marker for detecting a page reload.
+const refreshMarker = "iklHomepageRefresh";
 
-// Identify whether this page visit was caused by a refresh.
-const navigationEntry =
-  performance.getEntriesByType("navigation")[0];
+// Record that this page is being unloaded.
+window.addEventListener("pagehide", () => {
+  try {
+    sessionStorage.setItem(refreshMarker, "true");
+  } catch (error) {
+    // Continue normally if browser storage is unavailable.
+  }
+});
 
-const isPageRefresh = navigationEntry?.type === "reload";
+// Check whether the previous page visit ended with an unload.
+let wasPageRefreshed = false;
 
-if (isPageRefresh) {
+try {
+  wasPageRefreshed =
+    sessionStorage.getItem(refreshMarker) === "true";
 
-  // Tell the browser not to restore its previous scroll position.
+  // Clear the marker so it cannot affect later navigation.
+  sessionStorage.removeItem(refreshMarker);
+
+} catch (error) {
+  // Continue normally if browser storage is unavailable.
+}
+
+// Only perform the following actions after a detected reload.
+if (wasPageRefreshed) {
+
+  // Prevent the browser from restoring the previous scroll position.
   if ("scrollRestoration" in window.history) {
     window.history.scrollRestoration = "manual";
   }
 
-  // Remove a section fragment such as #about or #pathways.
-  // This prevents the browser from reopening that section.
+  // Remove fragments such as #about and #pathways from the URL.
   window.history.replaceState(
     null,
     "",
@@ -278,32 +297,30 @@ if (isPageRefresh) {
     window.scrollTo(0, 0);
   };
 
-  // Apply the position after the page has loaded.
-  window.addEventListener("load", () => {
+  // Apply the position after the page becomes visible.
+  window.addEventListener("pageshow", () => {
     returnToTop();
 
-    // Recheck after the browser's next rendering frames.
     window.requestAnimationFrame(() => {
       returnToTop();
 
       window.requestAnimationFrame(returnToTop);
     });
 
-    // Additional check for delayed browser scroll restoration.
     window.setTimeout(returnToTop, 150);
 
   }, { once: true });
 
-  // Also handle Safari's page-show restoration behaviour.
-  window.addEventListener("pageshow", () => {
+  // Also apply the position after the page finishes loading.
+  window.addEventListener("load", () => {
     returnToTop();
-
     window.setTimeout(returnToTop, 150);
 
   }, { once: true });
 }
 
+// ======================================================
+// END OF SECTION 9
+// ======================================================
 
-/* =========================================================
-   END OF IKL HOMEPAGE INTERACTION SCRIPT
-   ========================================================= */
+
