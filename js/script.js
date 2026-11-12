@@ -170,3 +170,8 @@ nav.querySelectorAll("a").forEach(link => {
 
 document.getElementById("currentYear").textContent =
   new Date().getFullYear();
+// Return to the top when the page is refreshed.
+if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+  window.scrollTo(0, 0);
+}
+
