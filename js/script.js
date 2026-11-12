@@ -1,8 +1,24 @@
-/* IKL Homepage Design Lab — POC concept search */
+/* =========================================================
+   IKL HOMEPAGE — INTERACTION SCRIPT
 
+   Purpose:
+   Controls homepage search, concept results, subject filters,
+   mobile navigation, footer year and page-refresh behaviour.
+
+   Project:
+   Interactive Knowledge Lexicon (IKL)
+   ========================================================= */
+
+
+/* =========================================================
+   1. CONCEPT DATA AND CONFIGURATION
+   ========================================================= */
+
+// Location of concept Markdown files in the reusable POC.
 const POC_CONCEPT_FILES =
   "https://github.com/jyv5fhwvft-a11y/ikl-reusable-architecture-poc/blob/main/concepts/";
 
+// Homepage concept collection.
 const concepts = [
   {
     name: "Ping",
@@ -62,22 +78,39 @@ const concepts = [
   }
 ];
 
+
+/* =========================================================
+   2. HOMEPAGE ELEMENT REFERENCES
+   ========================================================= */
+
+// Search elements.
 const form = document.getElementById("conceptSearchForm");
 const input = document.getElementById("conceptSearch");
 const results = document.getElementById("searchResults");
+
+// Navigation elements.
 const nav = document.getElementById("primaryNav");
 const menu = document.getElementById("menuToggle");
 
+
+/* =========================================================
+   3. CONCEPT SEARCH AND RESULTS
+   ========================================================= */
+
+// Find and display concepts matching the visitor's search.
 function renderResults(query) {
   const term = query.trim().toLowerCase();
+
   results.replaceChildren();
 
+  // Display a helpful message if the search is empty.
   if (!term) {
     results.innerHTML =
       '<p class="no-results">Enter a concept or subject to begin exploring.</p>';
     return;
   }
 
+  // Search concept names, subjects, descriptions and statuses.
   const matches = concepts.filter(concept =>
     [
       concept.name,
@@ -87,12 +120,14 @@ function renderResults(query) {
     ].some(value => value.toLowerCase().includes(term))
   );
 
+  // Display the no-results message when nothing matches.
   if (!matches.length) {
     results.innerHTML =
       '<p class="no-results no-match">No matching concept found yet. Try another word or subject.</p>';
     return;
   }
 
+  // Create a result card for every matching concept.
   matches.forEach(concept => {
     const card = document.createElement("article");
     card.className = "result-card";
@@ -106,6 +141,7 @@ function renderResults(query) {
 
     card.append(title, description);
 
+    // Link to the POC file when a concept file is available.
     if (concept.fileAvailable) {
       const link = document.createElement("a");
 
@@ -118,6 +154,7 @@ function renderResults(query) {
 
       card.append(link);
     } else {
+      // Show the development status for planned concepts.
       const status = document.createElement("span");
       status.className = "result-status";
       status.textContent = concept.status;
@@ -129,61 +166,144 @@ function renderResults(query) {
   });
 }
 
+
+/* =========================================================
+   4. SEARCH FORM
+   ========================================================= */
+
+// Handle searches submitted using the Search button or keyboard.
 form.addEventListener("submit", event => {
   event.preventDefault();
+
   renderResults(input.value);
+
+  // Clear the search field after displaying the results.
   input.value = "";
 });
 
+
+/* =========================================================
+   5. POPULAR SEARCH BUTTONS
+   ========================================================= */
+
+// Allow visitors to select a suggested search keyword.
 document.querySelectorAll("[data-search]").forEach(button => {
   button.addEventListener("click", () => {
     input.value = button.dataset.search;
+
     renderResults(input.value);
+
     input.focus();
   });
 });
 
+
+/* =========================================================
+   6. SUBJECT CATEGORY FILTERS
+   ========================================================= */
+
+// Display concepts belonging to the selected subject.
 document.querySelectorAll("[data-subject]").forEach(card => {
   card.addEventListener("click", () => {
     input.value = card.dataset.subject;
+
     renderResults(input.value);
   });
 });
 
+
+/* =========================================================
+   7. MOBILE NAVIGATION
+   ========================================================= */
+
+// Open and close the compact navigation menu.
 menu.addEventListener("click", () => {
   const open = nav.classList.toggle("is-open");
 
   menu.setAttribute("aria-expanded", String(open));
+
   menu.setAttribute(
     "aria-label",
     open ? "Close navigation" : "Open navigation"
   );
 });
 
+// Close the compact menu after a navigation link is selected.
 nav.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     nav.classList.remove("is-open");
+
     menu.setAttribute("aria-expanded", "false");
     menu.setAttribute("aria-label", "Open navigation");
   });
 });
 
+
+/* =========================================================
+   8. FOOTER — CURRENT YEAR
+   ========================================================= */
+
+// Automatically display the current year in the footer.
 document.getElementById("currentYear").textContent =
   new Date().getFullYear();
-// Return to the top when the page is refreshed.
-const navigationEntry = performance.getEntriesByType("navigation")[0];
 
-if (navigationEntry?.type === "reload") {
-  window.history.scrollRestoration = "manual";
 
-  window.addEventListener("pageshow", () => {
-    window.history.replaceState(
-      null,
-      "",
-      window.location.pathname + window.location.search
-    );
+/* =========================================================
+   9. PAGE REFRESH — RETURN TO TOP
+   ========================================================= */
 
+// Identify whether this page visit was caused by a refresh.
+const navigationEntry =
+  performance.getEntriesByType("navigation")[0];
+
+const isPageRefresh = navigationEntry?.type === "reload";
+
+if (isPageRefresh) {
+
+  // Tell the browser not to restore its previous scroll position.
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  // Remove a section fragment such as #about or #pathways.
+  // This prevents the browser from reopening that section.
+  window.history.replaceState(
+    null,
+    "",
+    window.location.pathname + window.location.search
+  );
+
+  // Return the visitor to the top of the homepage.
+  const returnToTop = () => {
     window.scrollTo(0, 0);
+  };
+
+  // Apply the position after the page has loaded.
+  window.addEventListener("load", () => {
+    returnToTop();
+
+    // Recheck after the browser's next rendering frames.
+    window.requestAnimationFrame(() => {
+      returnToTop();
+
+      window.requestAnimationFrame(returnToTop);
+    });
+
+    // Additional check for delayed browser scroll restoration.
+    window.setTimeout(returnToTop, 150);
+
+  }, { once: true });
+
+  // Also handle Safari's page-show restoration behaviour.
+  window.addEventListener("pageshow", () => {
+    returnToTop();
+
+    window.setTimeout(returnToTop, 150);
+
   }, { once: true });
 }
 
+
+/* =========================================================
+   END OF IKL HOMEPAGE INTERACTION SCRIPT
+   ========================================================= */
