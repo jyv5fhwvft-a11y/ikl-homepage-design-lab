@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore technology concepts through clear explanations, practical examples and interactive learning.">
+  <meta name="theme-color" content="#102a43">
+  <title>IKL — Explore. Understand. Experiment.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#home" aria-label="IKL home"><span class="brand-mark">IKL</span><span class="brand-name">Interactive Knowledge<br><strong>Lexicon</strong></span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primaryNav"><span></span><span></span><span></span></button>
+    <nav class="primary-nav" id="primaryNav" aria-label="Main navigation">
+      <a class="nav-link active" href="#home">Home</a><a class="nav-link" href="#subjects">Explore</a><a class="nav-link" href="#pathways">Learning pathways</a><a class="nav-link" href="#about">About IKL</a><a class="nav-cta" href="#concept-search">Find a concept ↗</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero" id="home"><div class="container hero-grid">
+  <div class="hero-copy"><p class="eyebrow"><i></i>A clearer way to learn technology</p>
+    <h1>Understand technology.<br><span>One concept at a time.</span></h1>
+    <p class="hero-description">Big ideas become easier when you explore them step by step. Start with simple explanations, discover how things work, then experiment.</p>
+    <div class="hero-actions"><a class="button button-primary" href="#concept-search">Explore concepts <b>→</b></a><a class="button button-secondary" href="#how-it-works">Discover how IKL works</a></div>
+    <p class="hero-proof"><b>✓</b> Learn at your own pace, from first principles to deeper understanding</p>
+  </div>
+  <div class="hero-art" aria-label="Three connected stages of learning">
+    <div class="orbit orbit-large"></div><div class="orbit orbit-small"></div>
+    <div class="hero-core"><small>✦</small><strong>IKL</strong><span>Knowledge<br>in motion</span></div>
+    <div class="orbit-node node-top"><b>01</b><span>Understand</span></div><div class="orbit-node node-right"><b>02</b><span>Explore</span></div><div class="orbit-node node-bottom"><b>03</b><span>Experiment</span></div>
+    <div class="floating-note note-one">✓ Clear explanations</div><div class="floating-note note-two">↗ Practical learning</div>
+  </div>
+</div></section>
+
+<section class="search-section section-pad" id="concept-search"><div class="container search-wrap">
+  <div class="section-heading centered"><p class="eyebrow">Start with a question</p><h2>What would you like to understand?</h2><p>Search by concept, subject or a phrase. Your next discovery starts here.</p></div>
+  <form class="search-box" id="conceptSearchForm" role="search"><span class="search-icon" aria-hidden="true">⌕</span><label class="visually-hidden" for="conceptSearch">Search concepts</label><input id="conceptSearch" type="search" placeholder="Try “Ping”, “Operating Systems” or “encryption”…" autocomplete="off"><button class="search-button" type="submit">Search →</button></form>
+  <div class="search-meta"><span>Popular starting points</span><div class="search-chips"><button type="button" data-search="Ping">Ping</button><button type="button" data-search="Process">Process</button><button type="button" data-search="Virtual Memory">Virtual Memory</button><button type="button" data-search="Encryption">Encryption</button></div></div>
+  <div class="search-results" id="searchResults" aria-live="polite"></div>
+</div></section>
+
+<section class="subjects-section section-pad" id="subjects"><div class="container">
+  <div class="section-heading split-heading"><div><p class="eyebrow">Explore the knowledge map</p><h2>Explore by subject</h2></div><p>Choose an area that interests you. Follow connections and build your understanding one idea at a time.</p></div>
+  <div class="subject-grid">
+    <a class="subject-card" href="#concept-search" data-subject="Operating Systems"><span class="subject-icon">▦</span><small>SYSTEMS &amp; COMPUTING</small><h3>Operating Systems</h3><p>Discover how computers manage programs, memory and resources.</p><b>Explore subject ↗</b><em>01</em></a>
+    <a class="subject-card teal" href="#concept-search" data-subject="Computer Networking"><span class="subject-icon">⌘</span><small>CONNECTED WORLD</small><h3>Computer Networking</h3><p>Understand how devices communicate and share information.</p><b>Explore subject ↗</b><em>02</em></a>
+    <a class="subject-card amber" href="#concept-search" data-subject="Cybersecurity"><span class="subject-icon">◇</span><small>SAFETY &amp; TRUST</small><h3>Cybersecurity</h3><p>Learn how information, systems and people are protected.</p><b>Explore subject ↗</b><em>03</em></a>
+    <a class="subject-card violet" href="#concept-search" data-subject="Artificial Intelligence"><span class="subject-icon">✳</span><small>INTELLIGENT TECHNOLOGY</small><h3>Artificial Intelligence</h3><p>Explore how machines learn patterns and support decisions.</p><b>Explore subject ↗</b><em>04</em></a>
+  </div>
+</div></section>
+
+<section class="learning-section section-pad" id="how-it-works"><div class="container">
+  <div class="section-heading centered light"><p class="eyebrow">More than definitions</p><h2>Three ways to truly understand</h2><p>IKL brings ideas to life through a simple learning journey.</p></div>
+  <div class="learning-grid">
+    <article class="learning-card"><span class="step">01</span><div class="learning-icon">◎</div><h3>Understand it</h3><p>Begin with clear definitions, everyday language, relatable analogies and examples.</p><small>Make sense of the idea</small></article>
+    <article class="learning-card featured"><span class="step">02</span><div class="learning-icon">⌘</div><h3>Learn how it works</h3><p>Explore components, architecture, mechanisms, diagrams and step-by-step explanations.</p><small>See what happens inside</small></article>
+    <article class="learning-card"><span class="step">03</span><div class="learning-icon">▶</div><h3>Experience it</h3><p>Experiment with simulations, practical examples and knowledge checks.</p><small>Learn by doing</small></article>
+  </div>
+</div></section>
+
+<section class="pathways-section section-pad" id="pathways"><div class="container">
+  <div class="section-heading split-heading"><div><p class="eyebrow">Build knowledge with direction</p><h2>Choose a learning pathway</h2></div><p>Follow a subject from its foundations towards more advanced ideas. Pathways are a growing part of the IKL vision.</p></div>
+  <div class="pathway-grid">
+    <article class="pathway-card"><span class="path-icon blue">▦</span><div><h3>Operating Systems</h3><p>From processes and threads to memory and scheduling.</p><small>Pathway in development</small></div></article>
+    <article class="pathway-card"><span class="path-icon teal">⌘</span><div><h3>Computer Networking</h3><p>From connectivity basics to protocols and network design.</p><small>Pathway in development</small></div></article>
+    <article class="pathway-card"><span class="path-icon amber">◇</span><div><h3>Cybersecurity</h3><p>Explore threats, protection, encryption and trust.</p><small>Planned</small></div></article>
+    <article class="pathway-card"><span class="path-icon violet">✳</span><div><h3>Artificial Intelligence</h3><p>Build understanding of data, models and machine learning.</p><small>Planned</small></div></article>
+  </div>
+</div></section>
+
+<section class="levels-section section-pad" id="levels"><div class="container levels-layout">
+  <div><p class="eyebrow">Grow your understanding</p><h2>Start simple.<br><span>Go as deep as you want.</span></h2><p class="levels-copy">Technical learning should not require you to know everything before you begin. IKL is designed to build understanding progressively.</p></div>
+  <div class="levels-list">
+    <article><b>01</b><div><h3>First-grader</h3><p>Simple words, familiar examples and big-picture understanding.</p></div><span>→</span></article>
+    <article><b>02</b><div><h3>Beginner</h3><p>Core ideas, key terms and how the pieces fit together.</p></div><span>→</span></article>
+    <article><b>03</b><div><h3>Undergraduate</h3><p>Technical detail, architecture, mechanisms and applications.</p></div><span>→</span></article>
+    <article><b>04</b><div><h3>Expert</h3><p>Deeper analysis, trade-offs, limitations and advanced connections.</p></div><span>→</span></article>
+  </div>
+</div></section>
+
+<section class="featured-section section-pad" id="featured"><div class="container">
+  <div class="section-heading split-heading"><div><p class="eyebrow">Take your first step</p><h2>Explore concepts</h2></div><p>A growing collection of technical ideas. Availability labels distinguish live lessons from concepts still being developed.</p></div>
+  <div class="featured-grid">
+    <article class="concept-card"><div><small>Computer Networking</small><span class="status live">Live lesson</span></div><h3>Ping</h3><p>Discover how a simple network utility checks whether another device responds.</p><a href="https://jyv5fhwvft-a11y.github.io/interactive-knowledge-lexicon/concepts/ping.html">Open concept ↗</a></article>
+    <article class="concept-card"><div><small>Operating Systems</small><span class="status progress">In development</span></div><h3>Process</h3><p>Understand a program in execution and the resources an operating system manages.</p><span class="muted">Coming to the concept library</span></article>
+    <article class="concept-card"><div><small>Operating Systems</small><span class="status planned">Next concept</span></div><h3>Threads</h3><p>Explore the units of execution that run within a process.</p><span class="muted">In the learning queue</span></article>
+  </div>
+  <p class="availability-note">ⓘ Only Ping currently links to a published production lesson. Other concept cards show development status, not live pages.</p>
+</div></section>
+
+<section class="about-section section-pad" id="about"><div class="container about-panel">
+  <div class="about-mark">IKL<sup>✦</sup></div><div><p class="eyebrow">About the project</p><h2>Knowledge should be explored, not memorised.</h2><p>The Interactive Knowledge Lexicon is an evolving educational platform designed to make technical concepts easier to approach, understand and experience. It connects simple explanations with deeper technical learning and practical exploration.</p><strong>Explore. Understand. Experiment.</strong></div>
+</div></section>
+</main>
+<footer class="site-footer"><div class="container footer-main"><a class="brand" href="#home"><span class="brand-mark">IKL</span><span class="brand-name">Interactive Knowledge<br><strong>Lexicon</strong></span></a><p>Explore. Understand. Experiment.</p><a href="#home">Back to top ↑</a></div><div class="container footer-bottom"><span>© <span id="currentYear">2026</span> Interactive Knowledge Lexicon</span><span>Created by Amir Khan.</span></div></footer>
+</body></html>
