@@ -277,6 +277,24 @@ try {
   // Continue normally if browser storage is unavailable.
 }
 
+
+  // TEMPORARY DIAGNOSTIC — identify Safari refresh behaviour.
+  const diagnosticNavigationEntry =
+    performance.getEntriesByType("navigation")[0];
+
+  if (window.location.hash || wasPageRefreshed) {
+    window.alert(
+      "IKL Refresh Diagnostic\n\n" +
+      "Navigation type: " +
+      (diagnosticNavigationEntry?.type || "unavailable") +
+      "\nRefresh marker detected: " +
+      wasPageRefreshed +
+      "\nURL fragment: " +
+      (window.location.hash || "none")
+    );
+  }
+
+
 // Only perform the following actions after a detected reload.
 if (wasPageRefreshed) {
 
